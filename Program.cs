@@ -14,9 +14,12 @@ namespace RestApp
         [STAThread]
         static void Main()
         {
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            int a = 5;
+            a++;
         }
     }
 }
