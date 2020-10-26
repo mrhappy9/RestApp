@@ -9,7 +9,7 @@ namespace RestApp
 {
     class WorkServer
     {
-        private static string connString = "server=localhost;user=root;database=restapp;password=password;" +
+        private static string connString = "server=localhost;user=root;database=rest;password=password;" +
                                               "Allow User Variables=True;";
         private MySqlConnection connection;
         public void createConnection()
