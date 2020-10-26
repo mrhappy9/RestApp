@@ -75,7 +75,18 @@ ENGINE = InnoDB;
 -- DROP TABLE IF EXISTS `Rest`.`Users`;
 -- CREATE TABLE IF NOT EXISTS `Rest`.`Users` (
 -- 	user_id INT NOT NULL AUTO_INCREMENT,
---     
+--   
+DROP TABLE IF EXISTS  `Rest`.`Warehouse`;
+CREATE TABLE IF NOT EXISTS `Rest`.`Warehouse` (
+	idItem INT NOT NULL AUTO_INCREMENT,
+    name TEXT NOT NULL,
+    idposition INT NOT NULL,
+    quantity INT NOT NULL,
+    price INT NOT NULL,
+	info TEXT,
+    PRIMARY KEY(idItem)
+);
+
 
 DROP TABLE IF EXISTS `Rest`.`Item` ;
 CREATE TABLE IF NOT EXISTS `Rest`.`Item` (
