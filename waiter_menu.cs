@@ -14,6 +14,8 @@ namespace RestApp
     public partial class waiter_menu : Form
     {
         int numb_prder = 0;
+        int tipcontrol = 0;
+        int pay = 0;
         WorkServer workServer = new WorkServer();
         int q = 0;
         List<int> mas = new List<int>();
@@ -98,6 +100,7 @@ namespace RestApp
 
         private void new_order_Click(object sender, EventArgs e)
         {
+            tipcontrol = 0;
             if ((q == 0) && (numb_prder == 0))
             {
                 q = 0;
@@ -133,13 +136,74 @@ namespace RestApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-           DataTable table = workServer.orderreq(Int32.Parse(choise.Text));
+            tipcontrol = 0;
+            DataTable table = workServer.orderreq(Int32.Parse(choise.Text));
             order.Text = table.Rows[0][0].ToString();
             sumforpay1.Text = table.Rows[0][1].ToString();
+            sumforpay2.Text = table.Rows[0][1].ToString();
         }
 
         private void pay1_Click(object sender, EventArgs e)
         {
+            if (pay == 0)
+            {
+                int a = -1 * (Int32.Parse(final1.Text) - Int32.Parse(put.Text));
+                back.Text = a.ToString();
+
+                string finalor = "Оплата: наличными" + '\r' + '\n' + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + '\r' + '\n' + "Без скидки: " + sumforpay1.Text + "          Скидка: " + discount1.Text + '\r' + '\n' + "ИТОГО                          " + final1.Text + '\r' + '\n' + "Внесено: " + put.Text + "              Сдача: " + back.Text + '\r' + '\n';
+                order.Text += finalor;
+                workServer.finalord(Int32.Parse(choise.Text), Int32.Parse(final1.Text), Int32.Parse(discount1.Text), "Наличными", DateTime.Now.ToShortTimeString(), order.Text);
+                pay = 1;
+            }
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            int a = Int32.Parse(sumforpay1.Text) - Int32.Parse(discount1.Text);
+            a += Int32.Parse(tip.Text);
+            final.Text = a.ToString();
+            final1.Text = a.ToString();
+            if (tipcontrol == 0)
+            {
+                workServer.addtip(Int32.Parse(Waiter_code.Text), Int32.Parse(tip.Text));
+                tipcontrol = 1;
+            }
+        }
+
+        private void new_pay_Click(object sender, EventArgs e)
+        {
+            discount1.Clear();
+            choise.Clear();
+            final1.Clear();
+            final.Clear();
+            cardholder.Clear();
+            cardnumber.Clear();
+            put.Clear();
+            back.Clear();
+            sumforpay1.Clear();
+            back.Clear();
+            order.Clear();
+            pay = 0;
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (pay == 0)
+            {
+               
+
+                string finalor = "Оплата: Картой" + '\r' + '\n' + DateTime.Now.ToShortDateString() + " " + DateTime.Now.ToShortTimeString() + '\r' + '\n' + "Без скидки: " + sumforpay2.Text + "          Скидка: " + discount1.Text + '\r' + '\n' + "ИТОГО                          " + final.Text + '\r' + '\n' + "Влделец карты: " + cardholder.Text + '\r' + '\n' + "Карта: " + cardnumber.Text + '\r' + '\n';
+                order.Text += finalor;
+                workServer.finalord(Int32.Parse(choise.Text), Int32.Parse(final.Text), Int32.Parse(discount1.Text), "Плата картой", DateTime.Now.ToShortTimeString(), order.Text);
+                pay = 1;
+            }
+        }
+
+        private void waiter_menu_Load(object sender, EventArgs e)
+        {
+            // TODO: данная строка кода позволяет загрузить данные в таблицу "restDataSet.order". При необходимости она может быть перемещена или удалена.
+            this.orderTableAdapter.Fill(this.restDataSet.order);
 
         }
     }

@@ -211,6 +211,70 @@ namespace RestApp
             }
 
         }
+        public void addtip(int id, int summ)
+        {
+            createConnection();
+
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SELECT ectra FROM rest.employee where idemployee = @id;";
+                command.Parameters.AddWithValue("@id", id);
+                DataTable id_table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+                adapter.SelectCommand = command;
+                adapter.Fill(id_table);
+                int a = Int32.Parse(id_table.Rows[0][0].ToString()) + summ;
+
+                command.CommandText = "SET SQL_SAFE_UPDATES = 0; UPDATE rest.employee SET ectra = @sum  WHERE(idemployee = @id);";
+                command.Parameters.AddWithValue("@sum", a);
+
+
+
+
+                command.ExecuteNonQuery();
+                loseConnection();
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+
+        public void finalord(int id, int sum, int disc, string way, string time, string text)
+        {
+            createConnection();
+
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SET SQL_SAFE_UPDATES = 0;  UPDATE `rest`.`order` SET `payment` = @pay, `wayofpayment` = @way, `text` = @text, `state` = 'Оплачен',`time_control` = @time, `discount` = @disc WHERE(`idOrder` = @id);";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@pay", sum);
+                command.Parameters.AddWithValue("@way", way);
+                command.Parameters.AddWithValue("@time", time);
+                command.Parameters.AddWithValue("@disc", disc);
+                command.Parameters.AddWithValue("@text", text);
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+
+                command.ExecuteNonQuery();
+                loseConnection();
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
 
         public int  sumreq(int id)
         {
