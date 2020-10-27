@@ -82,7 +82,7 @@ CREATE TABLE IF NOT EXISTS `Rest`.`Warehouse` (
     name TEXT NOT NULL,
     idposition INT NOT NULL,
     quantity INT NOT NULL,
-    price INT NOT NULL,
+    cost INT NOT NULL,
 	info TEXT,
     PRIMARY KEY(idItem)
 );

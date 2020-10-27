@@ -3,6 +3,7 @@ using MySqlX.XDevAPI.Relational;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -61,6 +62,37 @@ namespace RestApp
                                       reader[4].ToString(), reader[5].ToString());
                 }
                 loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void addGoods(String nameGood, int positionGood, int quantity, int cost, String info)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"UPDATE warehouse " +
+                                      $"SET idposition = {positionGood}, quantity=quantity+{quantity}, cost=cost+{cost}, info='{info}'" +
+                                      $"WHERE name = '{nameGood}' AND idposition = {positionGood};";
+                                     // $"WHERE name = '{nameGood}' AND idposition = {positionGood};";
+
+
+                /*$"UPDATE Warehouse" +
+                  $"SET idposition = {positionGood}, quantity={quantity}," +
+                  $"    cost={cost}, info = {info}" +
+                  $"WHERE name = {nameGood} AND idposition = {positionGood};"; */
+                /*+
+                                      $"OR" +
+                                      $"SET name = {nameGood}, quantity = quantity + {quantity}," +
+                                      $"    cost=cost+{cost}, info = {info}+' '" +
+                                      $"WHERE idposition = {positionGood} AND name != {nameGood}";*/
+                getData.ExecuteNonQuery();
+                loseConnection();
+
             }
             catch (MySqlException e)
             {

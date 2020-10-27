@@ -6,6 +6,6 @@ use Rest;
 -- ('Anna', '1999-09-13', 60000, 8, 'annawaiter', '13091999Anna', '8(903)199-85-26'), 
 -- ('Anatoliy', '1989-03-18', 70000, 9, 'anatoliywaiter', '18031989Anatoliy', '8(938)145-57-55'), 
 -- ('Eliza', '1997-08-16', 65000, 10, 'elizacooker', '16081997Eliza', '8(952)075-27-60');
-INSERT INTO `Rest`.`Warehouse` (`name`, `idposition`, `quantity`, `price`, `info`) VALUES
-	('Баранина', 1789, 12, 600, ' '),
-    ('Помидоры', 1235, 50, 80, ' ');
+INSERT INTO `Rest`.`Warehouse` (`name`, `idposition`, `quantity`, `cost`, `info`) VALUES
+	('Баранина', 1789, 12, 7200, ' '),
+    ('Помидоры', 1235, 50, 4000, ' ');
