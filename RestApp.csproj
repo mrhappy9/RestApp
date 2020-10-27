@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Employee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Employee.Designer.cs">
+      <DependentUpon>Employee.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +69,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>restDataSet.xsd</DependentUpon>
     </Compile>
+    <Compile Include="restDataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>restDataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="tablecookcs.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tablecookcs.Designer.cs">
+      <DependentUpon>tablecookcs.cs</DependentUpon>
+    </Compile>
     <Compile Include="waiter_menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +87,9 @@
       <DependentUpon>waiter_menu.cs</DependentUpon>
     </Compile>
     <Compile Include="WorkServer.cs" />
+    <EmbeddedResource Include="Employee.resx">
+      <DependentUpon>Employee.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -82,6 +102,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="tablecookcs.resx">
+      <DependentUpon>tablecookcs.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="waiter_menu.resx">
       <DependentUpon>waiter_menu.cs</DependentUpon>
     </EmbeddedResource>
@@ -104,6 +127,17 @@
     </None>
     <None Include="restDataSet.xss">
       <DependentUpon>restDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="restDataSet1.xsc">
+      <DependentUpon>restDataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="restDataSet1.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>restDataSet1.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="restDataSet1.xss">
+      <DependentUpon>restDataSet1.xsd</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>

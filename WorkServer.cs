@@ -128,7 +128,7 @@ namespace RestApp
             try
             {
                 MySqlCommand command = new MySqlCommand(connString, connection);
-                command.CommandText = "INSERT INTO `rest`.`item` (`idposition`, `quant`, `total_rice`, `id_order`, `State`, `idcooker`, `details`) VALUES (@idposition, @quant, @total_rice, @id_order, 0, 1, @details);";
+                command.CommandText = "INSERT INTO `rest`.`item` (`idposition`, `quant`, `total_rice`, `id_order`, `State`, `idcooker`, `details`) VALUES (@idposition, @quant, @total_rice, @id_order, 'Новый', 7, @details);";
                 command.Parameters.AddWithValue("@idposition", idposition);
                 command.Parameters.AddWithValue("@quant", quant);
                 command.Parameters.AddWithValue("@total_rice", total_rice);
@@ -324,6 +324,143 @@ namespace RestApp
             }
 
         }
+        
+        public void addemployee(string name, string birth, int salary, string login, string pass, string cell)
+        {
+
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "INSERT INTO `rest`.`employee` (`Name`, `Dateofbirth`, `salary`, `hoursofwork`, `login`, `password`, `cellphone`, `Ectra`) VALUES(@name, @birth, @salary, '0', @login, @pass, @cell, '0');";
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@birth", birth);
+                command.Parameters.AddWithValue("@salary", salary);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@pass", pass);
+                command.Parameters.AddWithValue("@cell", cell);
+            
+                command.ExecuteNonQuery();
+                this.loseConnection();
+
+
+
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+        public void changeimployee(int id,string name, string birth, int salary, string login, string pass, string cell, string hw, int extr)
+        {
+
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SET SQL_SAFE_UPDATES = 0; UPDATE `rest`.`employee` SET `Name` = @name, `Dateofbirth` = @birth, `salary` = @salary, `hoursofwork` = @hw, `login` = @login, `password` = @pass, `cellphone` = @cell, `Ectra` = @extra WHERE (`idEmployee` = @id);";
+                command.Parameters.AddWithValue("@name", name);
+                command.Parameters.AddWithValue("@birth", birth);
+                command.Parameters.AddWithValue("@salary", salary);
+                command.Parameters.AddWithValue("@login", login);
+                command.Parameters.AddWithValue("@pass", pass);
+                command.Parameters.AddWithValue("@cell", cell);
+                command.Parameters.AddWithValue("@extra", extr);
+                command.Parameters.AddWithValue("@hw", hw);
+                command.Parameters.AddWithValue("@id", id);
+                command.ExecuteNonQuery();
+                this.loseConnection();
+
+
+
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+        public void takingitem(int id, int id_cook)
+        {
+
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "UPDATE `rest`.`item` SET `State` = 'Обработан', `idcooker` = @id_cook WHERE (`idItem` = @id);";
+                command.Parameters.AddWithValue("@id", id);
+                command.Parameters.AddWithValue("@id_cook", id_cook);
+
+                command.ExecuteNonQuery();
+                this.loseConnection();
+
+
+
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+        public DataTable selectemployee(string login)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SELECT * FROM rest.Employee where login =@login";
+                command.Parameters.AddWithValue("@login", login);
+                DataTable id_table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+                adapter.SelectCommand = command;
+                adapter.Fill(id_table);
+                return id_table;
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+       
+        public DataTable tablecook()
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = " SELECT Iditem as 'Номер позиции', position.name as Позиция, employee.name as Ответсвенный , state As Статус , details As Комментарий FROM rest.item" +
+                " JOIN employee ON employee.Idemployee = item.idcooker"+
+                " JOIN position ON position.Idposition = item.idposition";
+
+                DataTable id_table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+                adapter.SelectCommand = command;
+                adapter.Fill(id_table);
+                return id_table;
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
         public DataTable orderreq(int id)
         {
             createConnection();
@@ -348,5 +485,57 @@ namespace RestApp
             }
 
         }
+        public DataTable masterreq()
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SELECT idemployee, name FROM rest.employee where job = 2";
+
+                DataTable id_table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+                adapter.SelectCommand = command;
+                adapter.Fill(id_table);
+                return id_table;
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+        public DataTable newit()
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand command = new MySqlCommand(connString, connection);
+                command.CommandText = "SELECT Iditem as 'Номер позиции', position.name as Позиция,  employee.name as Ответсвенный , state  As Статус ,details As Комментарий FROM rest.item " +
+                    "JOIN employee ON employee.Idemployee = item.idcooker " +
+                    "JOIN position ON position.Idposition = item.idposition " +
+                    "where employee.name = 'Отсутствует'";
+
+                DataTable id_table = new DataTable();
+                MySqlDataAdapter adapter = new MySqlDataAdapter();
+
+
+                adapter.SelectCommand = command;
+                adapter.Fill(id_table);
+                return id_table;
+
+            }
+            catch (MySqlException ex)
+            {
+                throw new Exception("Error executing with sql statement", ex);
+
+            }
+
+        }
+    
     }
 }

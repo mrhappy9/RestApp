@@ -17,7 +17,7 @@ namespace RestApp
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new waiter_menu());
+            Application.Run(new tablecookcs());
         }
     }
 }
