@@ -69,30 +69,73 @@ namespace RestApp
             }
         }
 
-        public void addGoods(String nameGood, int positionGood, int quantity, int cost, String info)
+        public void addGoods(String nameGood, int quantity, int cost, String info)
         {
             createConnection();
             try
             {
                 MySqlCommand getData = new MySqlCommand(connString, connection);
                 getData.CommandText = $"UPDATE warehouse " +
-                                      $"SET idposition = {positionGood}, quantity=quantity+{quantity}, cost=cost+{cost}, info='{info}'" +
-                                      $"WHERE name = '{nameGood}' AND idposition = {positionGood};";
-                                     // $"WHERE name = '{nameGood}' AND idposition = {positionGood};";
+                                      $"SET quantity=quantity+{quantity}, cost=cost+{cost}, info='{info}'" +
+                                      $"WHERE name = '{nameGood}';";
 
 
-                /*$"UPDATE Warehouse" +
-                  $"SET idposition = {positionGood}, quantity={quantity}," +
-                  $"    cost={cost}, info = {info}" +
-                  $"WHERE name = {nameGood} AND idposition = {positionGood};"; */
-                /*+
-                                      $"OR" +
-                                      $"SET name = {nameGood}, quantity = quantity + {quantity}," +
-                                      $"    cost=cost+{cost}, info = {info}+' '" +
-                                      $"WHERE idposition = {positionGood} AND name != {nameGood}";*/
-                getData.ExecuteNonQuery();
+                if (getData.ExecuteNonQuery() == 0)
+                {
+                    loseConnection();
+                    createConnection();
+                    try
+                    {
+                        Random rnd = new Random();
+
+                        MySqlCommand getNewData = new MySqlCommand(connString, connection);
+                        getNewData.CommandText = $"INSERT INTO warehouse (name, idposition, quantity, cost, info)  VALUES" +
+                                                 $"('{nameGood}', {rnd.Next(100, Convert.ToInt32(Math.Pow(100, 2)))}, {quantity}, {cost}, '{info}')";
+                        getNewData.ExecuteNonQuery();
+
+                        loseConnection();
+                    }
+                    catch (MySqlException e)
+                    {
+                        throw new Exception("Error executing into inster sql statement", e);
+                    }
+                }
                 loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
 
+        public void getBooksData(ComboBox cBox)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT name FROM warehouse;";
+                MySqlDataReader reader = getData.ExecuteReader();
+                while (reader.Read())
+                {
+                    cBox.Items.Add(reader[0].ToString());
+                }
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void removeBook(string name)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand deleteData = new MySqlCommand(connString, connection);
+                deleteData.CommandText = $"DELETE FROM warehouse WHERE name = '{name}';";
+                deleteData.ExecuteNonQuery();
+                loseConnection();
             }
             catch (MySqlException e)
             {

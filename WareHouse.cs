@@ -43,29 +43,37 @@ namespace RestApp
         {
             for(int i = 0; i < dataGridAcceptanceGoods.Rows.Count-1; i++)
             {
-                MessageBox.Show(dataGridAcceptanceGoods[0, i].Value.ToString() + " " +
-                                Convert.ToInt32(dataGridAcceptanceGoods[1, i].Value.ToString()) + " " +
-                                Convert.ToInt32(dataGridAcceptanceGoods[2, i].Value.ToString()) + " " +
-                                Convert.ToInt32(dataGridAcceptanceGoods[3, i].Value.ToString()) + " " +
-                                dataGridAcceptanceGoods[4, i].Value.ToString());
                 wServer.addGoods(dataGridAcceptanceGoods[0, i].Value.ToString(),
                                  Convert.ToInt32(dataGridAcceptanceGoods[1, i].Value.ToString()),
                                  Convert.ToInt32(dataGridAcceptanceGoods[2, i].Value.ToString()),
-                                 Convert.ToInt32(dataGridAcceptanceGoods[3, i].Value.ToString()),
-                                 dataGridAcceptanceGoods[4, i].Value.ToString());
-               
-               /* for (int j = 0; j < dataGridAcceptanceGoods.Columns.Count; j++)
-                {
-                    if (dataGridAcceptanceGoods[j, i].Value == null)
-                        MessageBox.Show("sf");
-                    else
-                    {
-                        
-                        textBox1.Text += dataGridAcceptanceGoods[j, i].Value.ToString();
-                    }
-                }
-                */
+                                 dataGridAcceptanceGoods[3, i].Value.ToString());
             }
+
+            dataGridView1.Rows.Clear();
+            dataGridAcceptanceGoods.Rows.Clear();
+        }
+
+        private void itemsBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            itemsBox.Items.Clear();
+            wServer.getBooksData(itemsBox);
+        }
+
+        private void tabPage3_Click(object sender, EventArgs e)
+        {
+            wServer.getBooksData(itemsBox);
+        }
+
+        private void removeItem_Click(object sender, EventArgs e)
+        {
+            if (itemsBox.SelectedItem != null) 
+            { 
+                wServer.removeBook(itemsBox.SelectedItem.ToString());
+                itemsBox.SelectedItem = null;
+                MessageBox.Show("Выбранный товар был списан", "Успешно!");
+            }
+            else
+                MessageBox.Show("Выберите корректную позицию товара для списания", "Внимание!");
         }
     }
 }
