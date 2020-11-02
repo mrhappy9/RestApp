@@ -49,7 +49,8 @@
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.removeItem = new System.Windows.Forms.Button();
             this.itemsBox = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.infoBox = new System.Windows.Forms.TextBox();
+            this.infoForecast = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -92,6 +93,7 @@
             this.buttonForecast.TabIndex = 2;
             this.buttonForecast.Text = "Прогноз";
             this.buttonForecast.UseVisualStyleBackColor = true;
+            this.buttonForecast.Click += new System.EventHandler(this.buttonForecast_Click);
             // 
             // allProductsButton
             // 
@@ -178,15 +180,18 @@
             // 
             // buttonClearGoods
             // 
+            this.buttonClearGoods.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonClearGoods.Location = new System.Drawing.Point(149, 318);
             this.buttonClearGoods.Name = "buttonClearGoods";
             this.buttonClearGoods.Size = new System.Drawing.Size(107, 29);
             this.buttonClearGoods.TabIndex = 2;
             this.buttonClearGoods.Text = "Очистить таблицу";
             this.buttonClearGoods.UseVisualStyleBackColor = true;
+            this.buttonClearGoods.Click += new System.EventHandler(this.buttonClearGoods_Click);
             // 
             // buttonAddGoods
             // 
+            this.buttonAddGoods.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonAddGoods.Location = new System.Drawing.Point(6, 318);
             this.buttonAddGoods.Name = "buttonAddGoods";
             this.buttonAddGoods.Size = new System.Drawing.Size(98, 29);
@@ -246,7 +251,8 @@
             // 
             // removeItem
             // 
-            this.removeItem.Location = new System.Drawing.Point(15, 111);
+            this.removeItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.removeItem.Location = new System.Drawing.Point(230, 35);
             this.removeItem.Name = "removeItem";
             this.removeItem.Size = new System.Drawing.Size(123, 31);
             this.removeItem.TabIndex = 2;
@@ -259,26 +265,36 @@
             this.itemsBox.Cursor = System.Windows.Forms.Cursors.Hand;
             this.itemsBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.itemsBox.FormattingEnabled = true;
-            this.itemsBox.Location = new System.Drawing.Point(15, 26);
+            this.itemsBox.Location = new System.Drawing.Point(15, 41);
             this.itemsBox.Name = "itemsBox";
             this.itemsBox.Size = new System.Drawing.Size(172, 21);
             this.itemsBox.TabIndex = 0;
             this.itemsBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.itemsBox_MouseClick);
             // 
-            // textBox1
+            // infoBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(593, 125);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(202, 127);
-            this.textBox1.TabIndex = 1;
+            this.infoBox.Location = new System.Drawing.Point(593, 125);
+            this.infoBox.Multiline = true;
+            this.infoBox.Name = "infoBox";
+            this.infoBox.Size = new System.Drawing.Size(202, 87);
+            this.infoBox.TabIndex = 1;
+            // 
+            // infoForecast
+            // 
+            this.infoForecast.AutoSize = true;
+            this.infoForecast.Location = new System.Drawing.Point(649, 109);
+            this.infoForecast.Name = "infoForecast";
+            this.infoForecast.Size = new System.Drawing.Size(85, 13);
+            this.infoForecast.TabIndex = 2;
+            this.infoForecast.Text = "Инфо прогноза";
             // 
             // WareHouse
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(807, 458);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.infoForecast);
+            this.Controls.Add(this.infoBox);
             this.Controls.Add(this.tabControl1);
             this.Name = "WareHouse";
             this.Text = "WareHouse";
@@ -310,7 +326,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn costProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn infoProduct;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox infoBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameAccepProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn quantityAccepProduct;
         private System.Windows.Forms.DataGridViewTextBoxColumn costAccepProduct;
@@ -318,5 +334,6 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.ComboBox itemsBox;
         private System.Windows.Forms.Button removeItem;
+        private System.Windows.Forms.Label infoForecast;
     }
 }

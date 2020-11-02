@@ -50,11 +50,6 @@ namespace RestApp
             return false;
         }
 
-
-
-
-
-
         private void switchWarning(bool flag)
         {
             if (flag)
