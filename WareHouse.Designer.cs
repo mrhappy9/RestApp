@@ -269,6 +269,7 @@
             this.itemsBox.Name = "itemsBox";
             this.itemsBox.Size = new System.Drawing.Size(172, 21);
             this.itemsBox.TabIndex = 0;
+            this.itemsBox.SelectedIndexChanged += new System.EventHandler(this.itemsBox_SelectedIndexChanged);
             this.itemsBox.MouseClick += new System.Windows.Forms.MouseEventHandler(this.itemsBox_MouseClick);
             // 
             // infoBox

@@ -39,7 +39,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `Rest`.`Employee` ;
 CREATE TABLE IF NOT EXISTS `Rest`.`Employee` (
-  `idEmployee` INT NOT NULL,
+  `idEmployee` INT NOT NULL, -- auto_increment,
   `Name` VARCHAR(45) NULL,
   `Dateofbirth` DATE NULL,
   `salary` INT NULL,
@@ -53,7 +53,7 @@ ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS `Rest`.`Order` ;
 CREATE TABLE IF NOT EXISTS `Rest`.`Order` (
-  `idOrder` INT NOT NULL AUTO_INCREMENT,
+  `idOrder` INT NOT NULL,
   `date` DATE NULL,
   `time_order` TIME NULL,
   `payment` INT NULL,
@@ -95,7 +95,7 @@ CREATE TABLE IF NOT EXISTS `Rest`.`Item` (
   `quant` INT NULL,
   `total_rice` INT NULL,
   `id_order` INT NULL,
-  `State` INT NULL,
+  `State` VARCHAR(15) NULL,
   `idcooker` INT NULL,
   `details` VARCHAR(100) NULL,
   PRIMARY KEY (`idItem`),

@@ -50,6 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cooking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Cooking.Designer.cs">
+      <DependentUpon>Cooking.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +71,9 @@
       <DependentUpon>WareHouse.cs</DependentUpon>
     </Compile>
     <Compile Include="WorkServer.cs" />
+    <EmbeddedResource Include="Cooking.resx">
+      <DependentUpon>Cooking.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

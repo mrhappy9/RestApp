@@ -117,5 +117,10 @@ namespace RestApp
                     infoBox.Text = "Неопределены товары, нуждающиеся в срочном заказе.";
             }
         }
+        
+        private void itemsBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

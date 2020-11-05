@@ -17,7 +17,8 @@ namespace RestApp
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new WareHouse());
+            /*Application.Run(new WareHouse());*/
+            Application.Run(new Cooking());
         }
     }
 }

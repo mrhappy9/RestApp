@@ -120,6 +120,67 @@ namespace RestApp
                 {
                     cBox.Items.Add(reader[0].ToString());
                 }
+                loseConnection(); //FIXME recently have been added
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void getCookData(ComboBox cBox)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT name FROM Employee WHERE login = 'cooker';";
+                MySqlDataReader reader = getData.ExecuteReader();
+                while (reader.Read())
+                {
+                    cBox.Items.Add(reader[0].ToString());
+                }
+                loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void getOrderData(ComboBox cBox)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT idposition FROM Item WHERE idcooker is NULL;";
+                MySqlDataReader reader = getData.ExecuteReader();
+                while (reader.Read())
+                {
+                    cBox.Items.Add(reader[0].ToString());
+                }
+                loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void getOrderInfoData(ComboBox cBox)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT idposition FROM Item WHERE idcooker is not NULL AND State is NULL;"; 
+                MySqlDataReader reader = getData.ExecuteReader();
+                while (reader.Read())
+                {
+                    cBox.Items.Add(reader[0].ToString());
+                }
+                loseConnection();
             }
             catch (MySqlException e)
             {
@@ -136,6 +197,92 @@ namespace RestApp
                 deleteData.CommandText = $"DELETE FROM warehouse WHERE name = '{name}';";
                 deleteData.ExecuteNonQuery();
                 loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void completeGridTableForCooking(DataGridView dataGrid)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT ord.idOrder, it.quant, pos.price, pos.name, ord.time_order FROM rest.order ord " +
+                                      $"JOIN Item it ON ord.idOrder = it.id_order " +
+                                      $"JOIN Position pos ON it.idposition = pos.idposition " +
+                                      $"WHERE pos.idposition = ord.idOrder AND it.idcooker is NULL;";
+                MySqlDataReader reader = getData.ExecuteReader();
+                dataGrid.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGrid.Rows.Add(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(),
+                                      reader[3].ToString(), reader[4].ToString());
+                }
+                loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void applyPurchase(string name, int purchase)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"UPDATE Item " +
+                                      $"SET idcooker = (SELECT idEmployee FROM Employee WHERE name = '{name}') " +
+                                      $"WHERE idposition = {purchase};";
+                getData.ExecuteNonQuery();
+                loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void completedataGridViewInfoPurchase(DataGridView dataGrid)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"SELECT ord.idOrder, it.quant, pos.price, pos.name, ord.time_order, " +
+                                      $"(SELECT Name FROM Employee WHERE idEmployee = it.idcooker) as cooker FROM rest.order ord " +
+                                      $"JOIN Item it ON ord.idOrder = it.id_order " +
+                                      $"JOIN Position pos ON it.idposition = pos.idposition " +
+                                      $"WHERE pos.idposition = ord.idOrder AND it.idcooker is not NULL;";
+                MySqlDataReader reader = getData.ExecuteReader();
+                dataGrid.Rows.Clear();
+                while (reader.Read())
+                {
+                    dataGrid.Rows.Add(reader[0].ToString(), reader[1].ToString(), reader[2].ToString(),
+                                      reader[3].ToString(), reader[4].ToString(), reader[5].ToString());
+                }
+                loseConnection();
+            }
+            catch (MySqlException e)
+            {
+                throw new Exception("Error executing into inster sql statement", e);
+            }
+        }
+
+        public void updateItem(int purchase)
+        {
+            createConnection();
+            try
+            {
+                MySqlCommand getData = new MySqlCommand(connString, connection);
+                getData.CommandText = $"UPDATE Item " +
+                                      $"SET State = 'OK' " +
+                                      $"WHERE idposition = {purchase};";
+                getData.ExecuteNonQuery();
             }
             catch (MySqlException e)
             {
